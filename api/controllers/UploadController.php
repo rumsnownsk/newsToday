@@ -89,6 +89,7 @@ class UploadController extends CommonController
             ]);
 
             $this->response([
+                'path' => $this->pathToImage.'/'.$fileName,
                 'message' => 'Картинка была успешно загружена на сервер'
             ], 200);
         } else {
