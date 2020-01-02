@@ -18,6 +18,7 @@ abstract class CommonModel extends Model
 
     public static $errors = array();
     public static $rules = array();
+    protected $hidden = array('pivot');
 
 
     public static function validate($data, $rules)

@@ -11,6 +11,7 @@ namespace api\controllers;
 
 use api\models\Category;
 use api\models\News;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class CategoryController extends CommonController
 {
@@ -113,8 +114,14 @@ class CategoryController extends CommonController
 
     public function newsCategoryAction($id)
     {
-        if ($news = News::where('category_id', $id)->get()) {
-            $this->response($news, 200);
+        $res = DB::table('news_category')
+            ->where('category_id', $id)
+            ->join('news', 'news_category.news_id', '=', 'news.id', '')
+            ->join('category', 'news_category.category_id', '=', 'category.id')
+            ->select('news.title as title_news', 'news.text', 'news.user_id', 'category.title as category')
+            ->get();
+        if ($res) {
+            $this->response($res, 200);
         } else {
             $this->response([], 204);
         };

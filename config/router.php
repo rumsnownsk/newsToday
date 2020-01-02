@@ -3,6 +3,7 @@
 // Настройки DI
 use DI\ContainerBuilder;
 use FastRoute\RouteCollector;
+use Illuminate\Database\Capsule\Manager as DB;
 
 //new app\core\ErrorHandler();
 
@@ -46,6 +47,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
     // показать все новости одной категории
     $r->addRoute('GET', '/category/{id:\d+}/news', ['api\controllers\CategoryController', 'newsCategoryAction']);
+
 
     // поиск новости по названию (есть обязательные GET-параметры onfield и text)
     $r->addRoute('GET', '/news/search', ['api\controllers\NewsController', 'searchAction']);

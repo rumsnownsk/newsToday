@@ -10,7 +10,6 @@ class NewsController extends CommonController
     {
         $news = News::all();
 
-        dd($_GET);
         if ($news) {
             $this->response($news, 200);
         }
@@ -22,6 +21,9 @@ class NewsController extends CommonController
         if (News::validate(self::$requestParams, News::$rules)) {
 
             $news = News::add(self::$requestParams);
+            $news->setCategories(self::$requestParams['category_id']);
+
+            $news['categories'] = $news->categories;
 
             $this->response($news, 201);
         } else {
@@ -31,23 +33,25 @@ class NewsController extends CommonController
 
     public function readAction($id)
     {
-        $news = News::find($id);
+        if ($news = News::find($id)) {
+            $news->user;
+            $news->categories;
 
-        if (!$news) {
-            $this->response([], 204);
+            $this->response($news, 200);
         }
-        $this->response($news, 200);
+        $this->response([], 204);
 
     }
 
     public function updateAction($id)
     {
-        $news = News::find($id);
+        if ($news = News::find($id)) {
 
-        if ($news) {
             if ($news->validate(self::$requestParams, News::$rules)) {
 
                 $news = $news->edit(self::$requestParams);
+                $news->setCategories(self::$requestParams['category_id']);
+                $news['categories'] = $news->categories;
 
                 $this->response($news, 200);
             } else {
