@@ -26,6 +26,11 @@ class News extends CommonModel
         $this->imageManager = new ImageManager('users');
     }
 
+    /**
+     * Создание новой записи
+     * @param array $fields - массив
+     * @return object
+     */
     public static function add($fields){
         $news = new static();
         $news->fill($fields);

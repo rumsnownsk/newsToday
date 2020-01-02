@@ -15,11 +15,11 @@ return [
         'encryption' => '',
     ],
     'database' => [
-        'driver' => '',
-        'host' => '',
-        'dbname' => '',
-        'username' => '',
-        'password' => '',
+        'driver' => 'mysql',
+        'host' => 'localhost',
+        'dbname' => 'newsToday',
+        'username' => 'root',
+        'password' => 'root',
         'charset'=>'utf8',
         'collation'=>'utf8_unicode_ci',
         'prefix'    => ''
