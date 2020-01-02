@@ -15,7 +15,7 @@ return [
         'encryption' => '',
     ],
     'database' => [
-        'driver' => 'test',
+        'driver' => '111111111',
         'host' => '',
         'dbname' => '',
         'username' => '',
