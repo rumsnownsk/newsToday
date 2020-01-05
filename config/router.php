@@ -21,6 +21,9 @@ try {
 // Настройки Роутера
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
+    // Генерация фейковых данных для всех моделей
+    $r->addRoute('GET', '/fakeGenerate', ['api\controllers\FakerController', 'runFakeGenerateAction']);// CRUD для модели News
+
     // CRUD для модели News
     $r->addRoute('GET', '/news', ['api\controllers\NewsController', 'indexAction']);
     $r->addRoute('POST', '/news', ['api\controllers\NewsController', 'createAction']);

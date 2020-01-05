@@ -3,7 +3,6 @@
 namespace api\controllers;
 
 use api\models\News;
-use Faker\Factory;
 
 class NewsController extends CommonController
 {

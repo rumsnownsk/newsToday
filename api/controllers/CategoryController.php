@@ -10,7 +10,6 @@ namespace api\controllers;
 
 
 use api\models\Category;
-use api\models\News;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class CategoryController extends CommonController
