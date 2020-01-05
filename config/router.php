@@ -42,20 +42,27 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('PUT', '/user/{id:\d+}', ['api\controllers\UserController', 'updateAction']);
     $r->addRoute('DELETE', '/user/{id:\d+}', ['api\controllers\UserController', 'deleteAction']);
 
-    // показать все новости одного юзера
+    // Загрузка картинок
+    $r->addRoute('POST', '/{nameModel}/{id:\d+}/upload', ['api\controllers\UploadController', 'uploadAction']);
+
+
+    // Дополнительные задачи
+
+    // выдача всех новостей конкретного автора
     $r->addRoute('GET', '/user/{id:\d+}/news', ['api\controllers\UserController', 'newsUserAction']);
 
-    // показать все новости одной категории
+    // выдача списка всех новостей, которые относятся к указанной рубрике
     $r->addRoute('GET', '/category/{id:\d+}/news', ['api\controllers\CategoryController', 'newsCategoryAction']);
 
 
-    // поиск новости по названию (есть обязательные GET-параметры onfield и text)
-    $r->addRoute('GET', '/news/search', ['api\controllers\NewsController', 'searchAction']);
+    // поиск новости по названию (или совпадению через оператор LIKE) (есть обязательные GET-параметры onfield и search)
+    // Например api.newstoday/search/news?onfield=title&search=Спар
+    $r->addRoute('GET', '/search/news', ['api\controllers\SearchController', 'newsByLikeAction']);
 
+    // искать новости по рубрике, не включая дочерние (есть обязательные GET-параметры onfield и search)
+    // Например api.newstoday/search/newsByCategory?search=прир
+    $r->addRoute('GET', '/search/newsByCategory', ['api\controllers\SearchController', 'newsByCategoryAction']);
 
-
-    // Загрузка картинок
-    $r->addRoute('POST', '/{nameModel}/{id:\d+}/upload', ['api\controllers\UploadController', 'uploadAction']);
 
     // Чистка картинок, не привязанных ни к одной сущности User или News
 //    $r->addRoute('DELETE', '/{namePath}/clear', ['api\controllers\UploadController', 'clearImagesAction']);
@@ -72,7 +79,7 @@ if (false !== $pos = strpos($uri, '?')) {
     $uri = substr($uri, 0, $pos);
 }
 $uri = rawurldecode($uri);
-//dd($dispatcher);
+
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:

@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use api\models\News;
+use Faker\Factory;
 
 class NewsController extends CommonController
 {
@@ -81,17 +82,6 @@ class NewsController extends CommonController
         } else {
             $this->response([], 204);
         }
-    }
-
-    public function searchAction(){
-        if (!$_GET['onfield'] || !$_GET['text']){
-          $this->response([
-              'errors' => 'необходимы поля field и search'
-          ]);
-        };
-
-        $news = News::query()->where($_GET['onfield'], 'LIKE', "%{$_GET['text']}%")->get();
-        $this->response($news, 200);
     }
 
 }
